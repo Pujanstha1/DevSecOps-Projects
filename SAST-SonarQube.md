@@ -1,7 +1,7 @@
 # SonarQube Integration with GitHub Actions
 
 This guide walks you through the complete process of setting up SonarQube code analysis for your GitHub repository using GitHub Actions.
-
+![alt text](images/cover.png)
 ## Prerequisites
 
 - Access to a SonarQube instance
