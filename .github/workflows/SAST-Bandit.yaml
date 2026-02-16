@@ -1,6 +1,6 @@
-name: CI
+name: Bandit - Python SAST Tool
 
-on: workflow_dispatch
+on: [push]
 
 jobs: 
     sast_scan: 

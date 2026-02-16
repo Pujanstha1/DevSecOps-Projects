@@ -1,4 +1,4 @@
-name: Build
+name: SonarQube - Code Quality & Security | SAST Tool
 
 on: [push]
 
