@@ -36,6 +36,13 @@ Fill in the required project information:
 
 ![alt text](images/title.png)
 
+**Note:** We need to create a file named `sonar-project.properties` in the `root` folder and fill in the values of the **Project Details**.
+```
+sonar.projectKey=SAST-Integration:-SonarQube-GitHub-Actions
+sonar.projectName=SAST-Integration:-SonarQube-GitHub-Actions
+sonar.sources=.
+
+```
 ### Step 4: Configure Analysis Settings
 
 When prompted for project settings:
@@ -121,10 +128,8 @@ For most non-Java projects, select **"Other"**.
 
 ```yaml
 name: Build
-on:
-  push:
-    branches:
-      - main
+on: [push]
+
 jobs:
   build:
     name: Build and analyze
@@ -160,6 +165,48 @@ jobs:
 4. Navigate to the **Actions** tab in your GitHub repository to monitor the workflow execution
 
 ---
+
+### Step 12: Go to GitHub Actions and view `build.yaml` file running and fix any issues
+
+![alt text](images/run.png)
+
+---
+## Reviewing Results
+### Step 13: View Analysis Results in SonarQube
+After the GitHub Actions workflow completes successfully, log in to your SonarQube instance to review the analysis results.
+![alt text](images/res.png)
+
+### Step 14: Review Detailed Metrics
+Navigate through the project dashboard to view detailed metrics including:
+
+- Overview
+- Issues
+- Security Hotspots
+- Measures
+- Code
+- Activity
+
+![alt text](images/sonarqube-result.png)
+---
+
+### In the `Issues` section, we can see the issues that `SonarQube` has flagged
+
+![alt text](images/issues.png)
+
+---
+
+### In the `Security Hotspot` section, `SonarQube` suggests us to review the code based on:
+#### Review Priority: **High**
+- Authentication
+#### Review Priority: **Medium**
+- Permission
+- Weak Crytography
+#### Review Priority: **Low**
+- Encryption of Sensitive Data
+- Tracability
+- Others
+
+![alt text](images/sh.png)
 
 ## Workflow Explanation
 
