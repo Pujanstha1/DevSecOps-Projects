@@ -220,5 +220,6 @@ The Bandit scan successfully identified **35 security issues** in the Python cod
 
 Integration of Bandit into the GitHub Actions pipeline provides **automated security feedback on every push**, enabling the development team to catch and fix security issues early in the development lifecycle.
 
----     
+---
+
 
