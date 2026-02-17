@@ -44,25 +44,40 @@ name: Bandit - Python SAST Tool
 
 on: [push]
 
-jobs:
-  sast_scan:
-    name: Run Bandit Scan
-    runs-on: ubuntu-latest
+jobs: 
+    sast_scan: 
+        name: Run Bandit Scan
+        runs-on: ubuntu-latest
+        
+        steps: 
+        - name: Checkout Code
+          uses: actions/checkout@v4
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+        - name: Setup Python
+          uses: actions/setup-python@v5
+          with: 
+            python-version: 3.8
+        
+        - name: Install Bandit
+          run: |
+            python -m pip install --upgrade pip
+            pip install  bandit
 
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
+        - name: Run Bandit Scan
+          run: bandit -r . -f json -o bandit-report.json
+          # if you want to segregate only medium and high severity and confidence 
+          # vulnerabilities, run: bandit -II -ii -r . -f json -o bandit-report.json
+          # where -II stands for Medium& High 'Severity'
+          #       -ii stands for Medium& High 'Confidence'
 
-      - name: Install Bandit
-        run: pip install bandit
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v4
+          if: always()                 #even if the steps fail, always execute this step
+          with:
+              name: bandit-findings
+              path: bandit-report.json #User can download the artifiact report through 
+                                       # GitHub Actions Workflow Logs
 
-      - name: Run Bandit Scan
-        run: bandit -r .
 ```
 When a push event occurs in the repository, the **GitHub Actions** workflow is automatically triggered. As part of this CI pipeline, the **Bandit SAST** (Static Application Security Testing) tool executes and scans all Python files in the repository for potential security vulnerabilities. 
 
@@ -80,7 +95,15 @@ This integration ensures that security checks are automatically enforced during 
 
 ![alt text](images/bandit-output.png)
 
+After the **Run Bandit Scan** `step`, we have **Upload Artifact** `step` which enables us to download the `Scan Report` in `json` file *(we can also set it to csv, xml, html and other file types)*. This step runs even after the sucessive failure of **Run Bandit Scan** as we have placed it in `if condition` to run in any case.
+
+The report can furthur be uploaded and analyzed from the `Bandit-Visualizer.html` listed in the repository. 
+
+![alt text](images/report.png)
+
 # Bandit Scan Report
+
+![alt text](images/visualizer.png)
 
 ## Scan Results Summary
 
